@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'other shit.dart';
+import 'userButtons.dart';
 
 //the main function
 void main() {
@@ -12,10 +13,9 @@ void main() {
 class ScoutingApp extends ConsumerWidget {
   const ScoutingApp({super.key});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scoreState  = ref.watch(scoring);
+    final scoreState = ref.watch(scoring);
     final isDarkMode = ref.watch(lightDark);
 
     return MaterialApp(
@@ -36,25 +36,24 @@ class ScoutingApp extends ConsumerWidget {
           child: Column(
             children: [
               ModeButton(),
-              SizedBox(height: 30,),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                ScoringButton(label: 'L1', pointValue: 2,),
+                  ScoringButton(label: 'L1', pointValue: 2),
                   const SizedBox(width: 20),
-                  ScoringButton(label: 'L2', pointValue: 3,),
+                  ScoringButton(label: 'L2', pointValue: 3),
                   const SizedBox(width: 20),
-                  ScoringButton(label: 'L3', pointValue: 4,),
+                  ScoringButton(label: 'L3', pointValue: 4),
                   const SizedBox(width: 20),
-                  ScoringButton(label: 'L4', pointValue: 5,),
+                  ScoringButton(label: 'L4', pointValue: 5),
                 ],
               ),
               const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ScoringButton(label: 'Net Algae', pointValue: 4,),
+                  ScoringButton(label: 'Net Algae', pointValue: 4),
                   const SizedBox(width: 20),
                   ScoringButton(label: 'Processed Algae', pointValue: 6),
                 ],
@@ -63,10 +62,11 @@ class ScoutingApp extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                ScoringButton(label: 'Co-op', pointValue: 1),
-                  const SizedBox(width: 20,),
-                  ScoringButton(label: 'Full level', pointValue: 1)
-              ],),
+                  ScoringButton(label: 'Co-op', pointValue: 1),
+                  const SizedBox(width: 20),
+                  ScoringButton(label: 'Full level', pointValue: 1),
+                ],
+              ),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,16 +98,16 @@ class ScoutingApp extends ConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Text('Tele score: ${scoreState.teleScore}'),
-               SizedBox(width: 20,),
-               Text('Manual score: ${scoreState.manualScore}'),
-               ],
-             ),
-              SizedBox(height: 20,),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Auto score: ${scoreState.teleScore}'),
+                  SizedBox(width: 20),
+                  Text('Teleop score: ${scoreState.manualScore}'),
+                ],
+              ),
+              SizedBox(height: 20),
               Text('Total scored: ${scoreState.totalScore}'),
               const Expanded(child: SizedBox.shrink()),
 
