@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'other shit.dart';
 
+//the main function
 void main() {
   runApp(ProviderScope(child: ScoutingApp()));
 }
 
+//the actual app
 class ScoutingApp extends ConsumerWidget {
   const ScoutingApp({super.key});
 
@@ -33,9 +35,12 @@ class ScoutingApp extends ConsumerWidget {
         body: Center(
           child: Column(
             children: [
+              ModeButton(),
+              SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
                 ScoringButton(label: 'L1', pointValue: 2,),
                   const SizedBox(width: 20),
                   ScoringButton(label: 'L2', pointValue: 3,),
@@ -54,7 +59,7 @@ class ScoutingApp extends ConsumerWidget {
                   ScoringButton(label: 'Processed Algae', pointValue: 6),
                 ],
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -93,7 +98,9 @@ class ScoutingApp extends ConsumerWidget {
                   ),
                 ],
               ),
+              Text('Tele score:'),
               SizedBox(width: 20,),
+              Text('Manual score:'),
               SizedBox(height: 20,),
               Text('Total scored: $totalScore'),
               const Expanded(child: SizedBox.shrink()),

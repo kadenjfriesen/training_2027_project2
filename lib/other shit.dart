@@ -97,3 +97,43 @@ const ScoringButton({
     );
   }
 }
+
+//segmented button for teleop and manual scoring
+class TeleManNotifier extends Notifier<bool> {
+  @override
+  bool build () {
+    return true;
+  }
+  void updateMode(bool value) {
+    state = value;
+  }
+}
+
+final teleManProvider = NotifierProvider<TeleManNotifier, bool>((){
+  return TeleManNotifier();
+});
+
+class ModeButton extends ConsumerWidget {
+  const ModeButton ({super.key});
+  @override
+Widget build(BuildContext context, WidgetRef ref) {
+    final isTele = ref.watch(teleManProvider);
+
+    return SegmentedButton<bool>(
+      segments: const <ButtonSegment<bool>>[
+        ButtonSegment<bool>(
+        value: true,
+        label: Text('Tele'),
+    ),
+      ButtonSegment<bool>(
+        value: false,
+        label: Text('Manual'),
+      )
+    ],
+      selected: <bool>{isTele},
+      onSelectionChanged: (Set<bool> newSelection) {
+        ref.read(teleManProvider.notifier).updateMode(newSelection.first);
+      },
+    );
+  }
+}
