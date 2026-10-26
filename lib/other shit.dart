@@ -29,6 +29,7 @@ class NameOfApp extends ConsumerWidget {
   }
 }
 
+//light mode and dark mode button
 class LightDarkNotifier extends Notifier<bool> {
   @override
   bool build() {
@@ -59,6 +60,7 @@ class OnOffSwitch extends ConsumerWidget {
   }
 }
 
+//buttons for scoring
 class ScoringNotifier extends Notifier<int> {
   @override
   int build() {
