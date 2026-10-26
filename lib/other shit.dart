@@ -91,7 +91,7 @@ const ScoringButton({
     return ElevatedButton(onPressed: () {
       ref.read(scoring.notifier).add(pointValue);
     },
-      child: Text('$label, + $pointValue points'),
+      child: Text('$label: $pointValue points'),
     );
   }
 }
