@@ -15,7 +15,7 @@ class ScoutingApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totalScore  = ref.watch(scoring);
+    final scoreState  = ref.watch(scoring);
     final isDarkMode = ref.watch(lightDark);
 
     return MaterialApp(
@@ -98,11 +98,17 @@ class ScoutingApp extends ConsumerWidget {
                   ),
                 ],
               ),
-              Text('Tele score:'),
-              SizedBox(width: 20,),
-              Text('Manual score:'),
+              SizedBox(height: 30,),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Text('Tele score: ${scoreState.teleScore}'),
+               SizedBox(width: 20,),
+               Text('Manual score: ${scoreState.manualScore}'),
+               ],
+             ),
               SizedBox(height: 20,),
-              Text('Total scored: $totalScore'),
+              Text('Total scored: ${scoreState.totalScore}'),
               const Expanded(child: SizedBox.shrink()),
 
               const Column(

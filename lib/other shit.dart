@@ -61,17 +61,35 @@ class OnOffSwitch extends ConsumerWidget {
 }
 
 //buttons for scoring
-class ScoringNotifier extends Notifier<int> {
-  @override
-  int build() {
-    return 0;
-  }
-    void add(int points) {
-      state += points;
-    }
+class ScoringState {
+  final int teleScore;
+  final int manualScore;
+  const ScoringState({required this.teleScore, required this.manualScore});
+  int get totalScore => teleScore + manualScore;
 }
 
-final scoring = NotifierProvider<ScoringNotifier, int>(() {
+class ScoringNotifier extends Notifier<ScoringState> {
+  @override
+  ScoringState build(){
+    return const ScoringState(teleScore: 0, manualScore: 0);
+  }
+  void add(int points) {
+    final isTele = ref.read(teleManProvider);
+    if(isTele) {
+      state = ScoringState(
+        teleScore: state.teleScore + points,
+        manualScore: state.manualScore,
+      );
+    } else {
+      state = ScoringState(
+        teleScore: state.teleScore,
+        manualScore: state.manualScore + points,
+      );
+    }
+  }
+}
+
+final scoring = NotifierProvider<ScoringNotifier, ScoringState>((){
   return ScoringNotifier();
 });
 
