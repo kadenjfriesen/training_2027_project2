@@ -90,7 +90,7 @@ class ScoringButton extends ConsumerWidget {
   }
 }
 
-//segmented button for teleop and manual scoring
+//segmented button for teleop and auto scoring
 class TeleManNotifier extends Notifier<bool> {
   @override
   bool build() {

@@ -27,4 +27,3 @@ class NameOfApp extends ConsumerWidget {
     return Text(title);
   }
 }
-
