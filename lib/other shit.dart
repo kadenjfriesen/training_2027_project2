@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'userButtons.dart';
 
 //a little logo at the bottom to show that our team made the app
 class PeopleIcon extends StatelessWidget {
@@ -29,11 +30,25 @@ class NameOfApp extends ConsumerWidget {
 }
 
 //list of scouted info
-final scoutedInfo = Provider<String>((ref) {
-  final scoreState = ref.watch(scoring);
-  return 'Team number:\n'
-      'Game number:\n'
-      'Auto score: ${scoreState.autoScore}\n'
-      'Teleop score: ${scoreState.teleScore}\n'
-      'Total scored: ${scoreState.totalScore}';
-});
+class ScoutedInfo extends ConsumerWidget {
+  const ScoutedInfo ({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scoreState = ref.watch(scoring);
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Text('Team number:'),
+        SizedBox(width: 20,),
+        Text('Game number:'),],),
+      SizedBox(height: 20),
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Text('Auto score: ${scoreState.autoScore}'),
+        SizedBox(width: 20),
+        Text('Teleop score: ${scoreState.teleScore}'),],),
+      SizedBox(height: 20),
+      Text('Total scored: ${scoreState.totalScore}'),
+    ],);
+  }
+}
