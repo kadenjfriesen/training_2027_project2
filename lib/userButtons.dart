@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-//in the code here i messed it up so teleop score is auto score and manual score is teleop score
 
 //light mode and dark mode button
 class LightDarkNotifier extends Notifier<bool> {
@@ -35,29 +34,29 @@ class OnOffSwitch extends ConsumerWidget {
 
 //buttons for scoring
 class ScoringState {
+  final int autoScore;
   final int teleScore;
-  final int manualScore;
-  const ScoringState({required this.teleScore, required this.manualScore});
-  int get totalScore => teleScore + manualScore;
+  const ScoringState({required this.autoScore, required this.teleScore});
+  int get totalScore => autoScore + teleScore;
 }
 
 class ScoringNotifier extends Notifier<ScoringState> {
   @override
   ScoringState build() {
-    return const ScoringState(teleScore: 0, manualScore: 0);
+    return const ScoringState(autoScore: 0, teleScore: 0);
   }
 
   void add(int points) {
-    final isTele = ref.read(teleManProvider);
-    if (isTele) {
+    final isAuto = ref.read(autoTeleProvider);
+    if (isAuto) {
       state = ScoringState(
-        teleScore: state.teleScore + points,
-        manualScore: state.manualScore,
+        autoScore: state.autoScore + points,
+        teleScore: state.teleScore,
       );
     } else {
       state = ScoringState(
-        teleScore: state.teleScore,
-        manualScore: state.manualScore + points,
+        autoScore: state.autoScore,
+        teleScore: state.teleScore + points,
       );
     }
   }
@@ -91,7 +90,7 @@ class ScoringButton extends ConsumerWidget {
 }
 
 //segmented button for teleop and auto scoring
-class TeleManNotifier extends Notifier<bool> {
+class AutoTeleNotifier extends Notifier<bool> {
   @override
   bool build() {
     return true;
@@ -102,15 +101,15 @@ class TeleManNotifier extends Notifier<bool> {
   }
 }
 
-final teleManProvider = NotifierProvider<TeleManNotifier, bool>(() {
-  return TeleManNotifier();
+final autoTeleProvider = NotifierProvider<AutoTeleNotifier, bool>(() {
+  return AutoTeleNotifier();
 });
 
 class ModeButton extends ConsumerWidget {
   const ModeButton({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTele = ref.watch(teleManProvider);
+    final isTele = ref.watch(autoTeleProvider);
 
     return SegmentedButton<bool>(
       segments: const <ButtonSegment<bool>>[
@@ -119,7 +118,7 @@ class ModeButton extends ConsumerWidget {
       ],
       selected: <bool>{isTele},
       onSelectionChanged: (Set<bool> newSelection) {
-        ref.read(teleManProvider.notifier).updateMode(newSelection.first);
+        ref.read(autoTeleProvider.notifier).updateMode(newSelection.first);
       },
     );
   }

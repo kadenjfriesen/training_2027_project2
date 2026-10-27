@@ -35,6 +35,37 @@ class ScoutingApp extends ConsumerWidget {
         body: Center(
           child: Column(
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: const InputDecoration(
+                        labelText: 'Team Number',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: const InputDecoration(
+                        labelText: 'Game Number',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30,),
               ModeButton(),
               SizedBox(height: 30),
               Row(
@@ -67,50 +98,24 @@ class ScoutingApp extends ConsumerWidget {
                   ScoringButton(label: 'Full level', pointValue: 1),
                 ],
               ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 200,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      decoration: const InputDecoration(
-                        labelText: 'Team Number',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 200,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      decoration: const InputDecoration(
-                        labelText: 'Game Number',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(height: 30),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Auto score: ${scoreState.teleScore}'),
-                  SizedBox(width: 20),
-                  Text('Teleop score: ${scoreState.manualScore}'),
+                  Text('Team number:'),
+                  SizedBox(height: 20,),
+                  Text('Game number:'),
+                  SizedBox(height: 20,),
+                  Text('Auto score: ${scoreState.autoScore}'),
+                  SizedBox(height: 20),
+                  Text('Teleop score: ${scoreState.teleScore}'),
+                  SizedBox(height: 20),
+                  Text('Total scored: ${scoreState.totalScore}'),
+                  SizedBox(height: 20,),
+                  ElevatedButton(onPressed: (){}, child: Text('Submit'),),
                 ],
               ),
-              SizedBox(height: 20),
-              Text('Total scored: ${scoreState.totalScore}'),
               const Expanded(child: SizedBox.shrink()),
-
               const Column(
                 children: [
                   Align(

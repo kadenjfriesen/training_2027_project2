@@ -27,3 +27,13 @@ class NameOfApp extends ConsumerWidget {
     return Text(title);
   }
 }
+
+//list of scouted info
+final scoutedInfo = Provider<String>((ref) {
+  final scoreState = ref.watch(scoring);
+  return 'Team number:\n'
+      'Game number:\n'
+      'Auto score: ${scoreState.autoScore}\n'
+      'Teleop score: ${scoreState.teleScore}\n'
+      'Total scored: ${scoreState.totalScore}';
+});
