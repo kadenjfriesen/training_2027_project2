@@ -110,6 +110,8 @@ class ScoutingApp extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ScoutedInfo(),
+                  SizedBox(height: 20,),
+                  ElevatedButton(onPressed: (){}, child: Text('Submit'),),
                 ],
               ),
               const Expanded(child: SizedBox.shrink()),
