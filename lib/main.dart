@@ -47,6 +47,10 @@ class ScoutingApp extends ConsumerWidget {
                       decoration: const InputDecoration(
                         labelText: 'Team Number',
                       ),
+                      onChanged: (value) {
+                        final parsedInt = int.tryParse(value) ?? 0;
+                        ref.read(teamNumberProvider.notifier).update(parsedInt);
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -60,6 +64,10 @@ class ScoutingApp extends ConsumerWidget {
                       decoration: const InputDecoration(
                         labelText: 'Game Number',
                       ),
+                      onChanged: (value) {
+                        final parsedInt = int.tryParse(value) ?? 0;
+                        ref.read(gameNumberProvider.notifier).update(parsedInt);
+                      },
                     ),
                   ),
                 ],
@@ -102,8 +110,6 @@ class ScoutingApp extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ScoutedInfo(),
-                  SizedBox(height: 20,),
-                  ElevatedButton(onPressed: (){}, child: Text('Submit'),),
                 ],
               ),
               const Expanded(child: SizedBox.shrink()),

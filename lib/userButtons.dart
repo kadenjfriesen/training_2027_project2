@@ -123,3 +123,21 @@ class ModeButton extends ConsumerWidget {
     );
   }
 }
+
+//team number notifier
+class TeamNumberNotifier extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void update(int value) => state = value;
+}
+final teamNumberProvider = NotifierProvider<TeamNumberNotifier, int>(() => TeamNumberNotifier ());
+
+//game number notifier
+class GameNumberNotifier extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void update(int value) => state = value;
+}
+final gameNumberProvider = NotifierProvider<GameNumberNotifier, int>(() => GameNumberNotifier ());

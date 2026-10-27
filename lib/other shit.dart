@@ -35,12 +35,14 @@ class ScoutedInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scoreState = ref.watch(scoring);
+    final teamNum = ref.watch(teamNumberProvider);
+    final gameNum = ref.watch(gameNumberProvider);
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        Text('Team number:'),
+        Text('Team number: ${teamNum == 0 ? "" : teamNum}'),
         SizedBox(width: 20,),
-        Text('Game number:'),],),
+        Text('Game number: ${gameNum == 0 ? "" : gameNum}'),],),
       SizedBox(height: 20),
       Row(mainAxisAlignment: MainAxisAlignment.center,
         children: [
