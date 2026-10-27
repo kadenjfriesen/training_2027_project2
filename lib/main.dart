@@ -26,6 +26,7 @@ class ScoutingApp extends ConsumerWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
+          leading: const Icon(Icons.scuba_diving),
           title: const Text('Reefscape Scouting'),
           actions: const [
             Row(children: [OnOffSwitch(), SizedBox(width: 30)]),
@@ -110,8 +111,6 @@ class ScoutingApp extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ScoutedInfo(),
-                  SizedBox(height: 20,),
-                  ElevatedButton(onPressed: (){}, child: Text('Submit'),),
                 ],
               ),
               const Expanded(child: SizedBox.shrink()),
