@@ -20,7 +20,7 @@ class ScoutingApp extends ConsumerWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
+          seedColor: Colors.deepPurple,
           brightness: isDarkMode ? Brightness.dark : Brightness.light,
         ),
       ),
