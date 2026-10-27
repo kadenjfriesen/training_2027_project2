@@ -14,7 +14,7 @@ class PeopleIcon extends StatelessWidget {
   }
 }
 
-//info down at the bottom
+//small team info at the bottom of the screen
 final reefscapeScouting = Provider<String>((ref) {
   return 'Reefscape Scouting App. Copyright 2026';
 });
