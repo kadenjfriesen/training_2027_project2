@@ -143,6 +143,19 @@ class ScoutingPage extends ConsumerWidget {
                 SizedBox(
                   width: 200,
                   child: TextField(
+                    decoration: const InputDecoration(
+                        labelText: 'Team Name'
+                    ),
+                    onChanged: (value) {
+                    final teamName = value;
+                    ref.read(teamNameProvider.notifier).update(teamName);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: 200,
+                  child: TextField(
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
