@@ -79,8 +79,6 @@ class ScoringButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scoreValue = ref.watch(scoring);
-
     return ElevatedButton(
       onPressed: () {
         ref.read(scoring.notifier).add(pointValue);
