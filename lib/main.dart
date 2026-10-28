@@ -281,6 +281,22 @@ class LogPage extends ConsumerWidget {
               ],
             ),
             SizedBox(height: 30,),
+            const Expanded(child: SizedBox.shrink()),
+            const Column(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    children: [
+                      PeopleIcon(name: 'Bear Metal'),
+                      SizedBox(height: 15),
+                      NameOfApp(),
+                      SizedBox(height: 14),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
