@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'userButtons.dart';
+import 'package:go_router/go_router.dart';
 
 //a little logo at the bottom to show that our team made the app
 class PeopleIcon extends StatelessWidget {
