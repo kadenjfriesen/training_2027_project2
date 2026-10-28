@@ -5,7 +5,6 @@ import 'other shit.dart';
 import 'userButtons.dart';
 import 'package:go_router/go_router.dart';
 
-
 final _router = GoRouter(
   routes: [
     GoRoute(
@@ -53,25 +52,56 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(Icons.scuba_diving),
-        title: const Text('Reefscape Scouting'),
-        actions: [
-        Row(children: [
-          IconButton(onPressed: ()=> context.go('/scoutingpage'), icon: Icon(Icons.computer)),
-          SizedBox(width: 30),
-          IconButton(onPressed: ()=> context.go('/logpage'), icon: Icon(Icons.list_alt)),
-          SizedBox(width: 30),
-          OnOffSwitch(),
-          SizedBox(width: 30)]),]
-      ),
-      body: Center(
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [ElevatedButton(onPressed: ()=> context.go('/scoutingpage'), child: Text('Scout'),),]
+        appBar: AppBar(
+          leading: const Icon(Icons.scuba_diving),
+          title: const Text('Reefscape Scouting'),
+          actions: [
+            Row(
+              children: [
+                const OnOffSwitch(),
+                const SizedBox(width: 30),
+              ],
+            ),
+          ],
         ),
-      ),
+        body: Center(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(style: TextStyle(fontSize: 30), 'Reefscape Scouting'),
+                  SizedBox(width: 10,),
+                  Icon(size: 45, Icons.home),
+              ],),
+              SizedBox(height: 100,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(onPressed: () => context.go('/scoutingpage'), label: const Text('Scout'), icon: const Icon(Icons.computer)),
+                  SizedBox(width: 30,),
+                  ElevatedButton.icon(onPressed: () => context.go('/logpage'), label: const Text('View log'), icon: const Icon(Icons.list_alt)),
+                ],
+              ),
+              const Expanded(child: SizedBox.shrink()),
+              const Column(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Column(
+                      children: [
+                        PeopleIcon(name: 'Bear Metal'),
+                        SizedBox(height: 15),
+                        NameOfApp(),
+                        SizedBox(height: 14),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
     );
   }
 }
@@ -98,6 +128,15 @@ class ScoutingPage extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(style: TextStyle(fontSize: 30), 'Scout game'),
+                SizedBox(width: 10,),
+                Icon(size: 45, Icons.computer),
+              ],
+            ),
+            SizedBox(height: 30,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -217,7 +256,21 @@ class LogPage extends ConsumerWidget {
               OnOffSwitch(),
               SizedBox(width: 30)]),]
       ),
-      body: Center(),
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(style: TextStyle(fontSize: 30), 'Scouting log'),
+                SizedBox(width: 10,),
+                Icon(size: 45, Icons.list_alt),
+              ],
+            ),
+            SizedBox(height: 30,),
+          ],
+        ),
+      ),
       );
   }
 }
