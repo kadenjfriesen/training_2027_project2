@@ -251,7 +251,7 @@ class ScoutingPage extends ConsumerWidget {
   }
 }
 
-//log page
+//log page (scrollable)
 class LogPage extends ConsumerWidget {
   const LogPage({super.key});
   @override
@@ -269,37 +269,48 @@ class LogPage extends ConsumerWidget {
               OnOffSwitch(),
               SizedBox(width: 30)]),]
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(style: TextStyle(fontSize: 30), 'Scouting log'),
-                SizedBox(width: 10,),
-                Icon(size: 45, Icons.list_alt),
-              ],
-            ),
-            SizedBox(height: 30,),
-            const Expanded(child: SizedBox.shrink()),
-            const Column(
-              children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
+      body: LayoutBuilder(
+          builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Center(
                   child: Column(
                     children: [
-                      PeopleIcon(name: 'Bear Metal'),
-                      SizedBox(height: 15),
-                      NameOfApp(),
-                      SizedBox(height: 14),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(style: TextStyle(fontSize: 30), 'Scouting log'),
+                          SizedBox(width: 10,),
+                          Icon(size: 45, Icons.list_alt),
+                        ],
+                      ),
+                      SizedBox(height: 30,),
+                      const Spacer(),
+                      const Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Column(
+                              children: [
+                                PeopleIcon(name: 'Bear Metal'),
+                                SizedBox(height: 15),
+                                NameOfApp(),
+                                SizedBox(height: 14),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ],
-        ),
-      ),
+          );
+          }
+      )
       );
   }
 }
