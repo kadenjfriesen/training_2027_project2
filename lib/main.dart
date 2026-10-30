@@ -4,6 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'other shit.dart';
 import 'userButtons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+
+List<String> scoutingLog = [];
+
+final TextEditingController _nameController = TextEditingController();
+final TextEditingController _teamNumController = TextEditingController();
+final TextEditingController _gameNumController = TextEditingController();
 
 final _router = GoRouter(
   routes: [
@@ -71,8 +78,6 @@ class HomePage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(style: TextStyle(fontSize: 30), 'Reefscape Scouting'),
-                  SizedBox(width: 10,),
-                  Icon(size: 45, Icons.home),
               ],),
               SizedBox(height: 100,),
               Row(
@@ -90,8 +95,6 @@ class HomePage extends ConsumerWidget {
                     alignment: Alignment.bottomCenter,
                     child: Column(
                       children: [
-                        PeopleIcon(name: 'Bear Metal'),
-                        SizedBox(height: 15),
                         NameOfApp(),
                         SizedBox(height: 14),
                       ],
@@ -117,12 +120,14 @@ class ScoutingPage extends ConsumerWidget {
         title: const Text('Reefscape Scouting'),
         actions:  [
           Row(children: [
-            IconButton(onPressed: ()=> context.go('/'), icon: Icon(Icons.home)),
             SizedBox(width: 30),
-            IconButton(onPressed: ()=> context.go('/logpage'), icon: Icon(Icons.list_alt)),
+
             SizedBox(width: 30),
+
             OnOffSwitch(),
-            SizedBox(width: 30)]),
+            SizedBox(width: 30)
+          ]
+          ),
         ],
       ),
       body: Center(
@@ -132,8 +137,6 @@ class ScoutingPage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(style: TextStyle(fontSize: 30), 'Scout game'),
-                SizedBox(width: 10,),
-                Icon(size: 45, Icons.computer),
               ],
             ),
             SizedBox(height: 30,),
@@ -143,6 +146,7 @@ class ScoutingPage extends ConsumerWidget {
                 SizedBox(
                   width: 200,
                   child: TextField(
+                    controller: _nameController,
                     decoration: const InputDecoration(
                         labelText: 'Team Name'
                     ),
@@ -156,6 +160,7 @@ class ScoutingPage extends ConsumerWidget {
                 SizedBox(
                   width: 200,
                   child: TextField(
+                    controller: _teamNumController,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
@@ -173,6 +178,7 @@ class ScoutingPage extends ConsumerWidget {
                 SizedBox(
                   width: 200,
                   child: TextField(
+                    controller: _gameNumController,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly,
@@ -221,32 +227,73 @@ class ScoutingPage extends ConsumerWidget {
                 ScoringButton(label: 'Full level', pointValue: 1),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScoutedInfo(),
               ],
             ),
+            const SizedBox(height: 30,),
+
             const Expanded(child: SizedBox.shrink()),
-            const Column(
-              children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    children: [
-                      PeopleIcon(name: 'Bear Metal'),
-                      SizedBox(height: 15),
-                      NameOfApp(),
-                      SizedBox(height: 14),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
+      bottomNavigationBar: Builder(
+          builder: (BuildContext context) {
+            return ConvexAppBar(
+              style: TabStyle.fixed, backgroundColor: Colors.purple,
+              items: const [
+                TabItem(icon: Icon(Icons.undo, color: Colors.yellow), title: 'Undo'),
+                TabItem(icon: Icon(Icons.redo, color: Colors.yellow), title: 'Redo'),
+                TabItem(icon: Icon(Icons.upload, color: Colors.yellow), title: 'Submit'),
+                TabItem(icon: Icon(Icons.home, color: Colors.yellow), title: 'Home'),
+                TabItem(icon: Icon(Icons.list_alt, color: Colors.yellow), title: 'Log')
+              ],
+              onTap: (int index) {
+                switch (index) {
+                  case 0:
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                  //add to list
+                    final currentScore = ref.read(scoring);
+                    final currentTeamName = ref.read(teamNameProvider);
+                    final currentTeamNum = ref.read(teamNumberProvider);
+                    final currentGameNum = ref.read(gameNumberProvider);
+
+                    scoutingLog.add('\nTeam name: $currentTeamName');
+                    scoutingLog.add('\nTeam number: $currentTeamNum');
+                    scoutingLog.add('\nGame number: $currentGameNum');
+                    scoutingLog.add('\nAuto score: ${currentScore.autoScore}');
+                    scoutingLog.add('\nTeleop score: ${currentScore.teleScore}');
+                    scoutingLog.add('\nTotal scored: ${currentScore.totalScore}');
+                    scoutingLog.add('\n');
+
+                    //reset values
+                    _nameController.clear();
+                    _teamNumController.clear();
+                    _gameNumController.clear();
+                    ref.invalidate(teamNameProvider);
+                    ref.invalidate(teamNumberProvider);
+                    ref.invalidate(gameNumberProvider);
+                    ref.invalidate(scoring);
+                    break;
+
+                  case 3:
+                    context.go('/');
+                    break;
+
+                  case 4:
+                   context.go('/logpage');
+                    break;
+                }
+              },
+            );
+          }
+      )
     );
   }
 }
@@ -262,10 +309,6 @@ class LogPage extends ConsumerWidget {
           title: const Text('Reefscape Scouting'),
           actions: [
             Row(children: [
-              IconButton(onPressed: ()=> context.go('/'), icon: Icon(Icons.home)),
-              SizedBox(width: 30),
-              IconButton(onPressed: ()=> context.go('/scoutingpage'), icon: Icon(Icons.computer)),
-              SizedBox(width: 30),
               OnOffSwitch(),
               SizedBox(width: 30)]),]
       ),
@@ -282,20 +325,26 @@ class LogPage extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(style: TextStyle(fontSize: 30), 'Scouting log'),
-                          SizedBox(width: 10,),
-                          Icon(size: 45, Icons.list_alt),
                         ],
                       ),
                       SizedBox(height: 30,),
+                      Text('$scoutingLog'),
                       const Spacer(),
-                      const Column(
+                      Column(
                         children: [
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Column(
                               children: [
-                                PeopleIcon(name: 'Bear Metal'),
-                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(onPressed: ()=> context.go('/scoutingpage'), child: Text('Scout Again')),
+                                    SizedBox(width: 30,),
+                                    ElevatedButton(onPressed: ()=> context.go('/'), child: Text('Return Home'))
+                                  ],
+                                ),
+                                SizedBox(height: 30,),
                                 NameOfApp(),
                                 SizedBox(height: 14),
                               ],
