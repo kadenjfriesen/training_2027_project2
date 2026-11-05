@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'other shit.dart';
+import 'otherShit.dart';
 import 'userButtons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'apiShit.dart';
 
 List<String> scoutingLog = [];
 
@@ -43,9 +44,10 @@ class ScoutingApp extends ConsumerWidget {
     final isDarkMode = ref.watch(lightDark);
     return MaterialApp.router(
       routerConfig: _router,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: Colors.purple,
           brightness: isDarkMode ? Brightness.dark : Brightness.light,
         ),
       ),
@@ -255,8 +257,10 @@ class ScoutingPage extends ConsumerWidget {
                 switch (index) {
                   case 0:
                     break;
+
                   case 1:
                     break;
+
                   case 2:
                   //add to list
                     final currentScore = ref.read(scoring);
@@ -321,6 +325,13 @@ class LogPage extends ConsumerWidget {
                 child: Center(
                   child: Column(
                     children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TeamInfo(teamNumber: ref.watch(teamNumberProvider),),
+                        ],
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

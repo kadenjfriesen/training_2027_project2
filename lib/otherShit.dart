@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'userButtons.dart';
 
+
 //small team info at the bottom of the screen
 final reefscapeScouting = Provider<String>((ref) {
   return 'Reefscape Scouting App. Copyright 2026';
