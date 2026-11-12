@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'userButtons.dart';
+import 'user_buttons.dart';
 
 
 //small team info at the bottom of the screen

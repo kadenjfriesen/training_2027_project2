@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'otherShit.dart';
-import 'userButtons.dart';
+import 'other_stuff.dart';
+import 'user_buttons.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-import 'apiShit.dart';
+import 'api_stuff.dart';
 
 List<String> scoutingLog = [];
 
@@ -138,7 +138,6 @@ class ScoutingPage extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 const SizedBox(width: 20),
                 SizedBox(
                   width: 200,
@@ -273,8 +272,9 @@ class ScoutingPage extends ConsumerWidget {
                     final teamData = await fetchTeamInfo(currentTeamNum);
 
                     //put all info into 1 list
-                    final scoutingEntry = '''
-                    Team #$currentTeamNum
+                    final scoutingEntry =
+                        '''
+                    Team $currentTeamNum
                     Team Name: ${teamData['nickname'] ?? 'Unknown'}
                     City: ${teamData['city'] ?? 'Unknown'}
                     State: ${teamData['state_prov'] ?? 'Unknown'}
