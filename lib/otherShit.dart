@@ -20,38 +20,24 @@ class NameOfApp extends ConsumerWidget {
 
 //list of scouted info
 class ScoutedInfo extends ConsumerWidget {
-  const ScoutedInfo ({super.key});
+  const ScoutedInfo({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scoreState = ref.watch(scoring);
-    final getName = ref.watch(teamNameProvider);
     final teamNum = ref.watch(teamNumberProvider);
     final gameNum = ref.watch(gameNumberProvider);
     return Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Text('Auto score: ${scoreState.autoScore}'),
-              SizedBox(height: 20),
-              Text('Teleop score: ${scoreState.teleScore}'),
-              SizedBox(height: 20,),
-              Text('Total scored: ${scoreState.totalScore}'),
-            ],
-          ),
-          SizedBox(width: 50,),
-         Column(
-           children: [
-             Text('Team name: $getName'),
-             SizedBox(height: 20,),
-             Text('Team number: ${teamNum == 0 ? "" : teamNum}'),
-             SizedBox(height: 20,),
-             Text('Game number: ${gameNum == 0 ? "" : gameNum}'),
-           ],
-         )
-        ],
-      ),
-    ],
+      Text('Team number: ${teamNum == 0 ? "" : teamNum}'),
+      SizedBox(height: 20,),
+      Text('Game number: ${gameNum == 0 ? "" : gameNum}'),
+      SizedBox(height: 20,),
+      Text('Auto score: ${scoreState.autoScore}'),
+      SizedBox(height: 20),
+      Text('Teleop score: ${scoreState.teleScore}'),
+      SizedBox(height: 20,),
+      Text('Total scored: ${scoreState.totalScore}'),
+    ]
     );
   }
 }

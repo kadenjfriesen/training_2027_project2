@@ -122,16 +122,6 @@ class ModeButton extends ConsumerWidget {
   }
 }
 
-//team name provider
-class TeamNameNotifier extends Notifier<String> {
-  @override
-  String build() => '';
-
-  void update(String value) => state = value;
-}
-
-final teamNameProvider = NotifierProvider<TeamNameNotifier, String>(() => TeamNameNotifier());
-
 //team number notifier
 class TeamNumberNotifier extends Notifier<int> {
   @override
