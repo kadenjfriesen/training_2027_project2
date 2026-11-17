@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'user_buttons.dart';
 
+import 'user_buttons.dart';
 
 //small team info at the bottom of the screen
 final reefscapeScouting = Provider<String>((ref) {
@@ -27,17 +27,18 @@ class ScoutedInfo extends ConsumerWidget {
     final scoreState = ref.watch(scoring);
     final teamNum = ref.watch(teamNumberProvider);
     final gameNum = ref.watch(gameNumberProvider);
-    return Column(children: [
-      Text('Team number: ${teamNum == 0 ? "" : teamNum}'),
-      SizedBox(height: 20,),
-      Text('Game number: ${gameNum == 0 ? "" : gameNum}'),
-      SizedBox(height: 20,),
-      Text('Auto score: ${scoreState.autoScore}'),
-      SizedBox(height: 20),
-      Text('Teleop score: ${scoreState.teleScore}'),
-      SizedBox(height: 20,),
-      Text('Total scored: ${scoreState.totalScore}'),
-    ]
+    return Column(
+      children: [
+        Text('Team number: ${teamNum == 0 ? "" : teamNum}'),
+        SizedBox(height: 20),
+        Text('Game number: ${gameNum == 0 ? "" : gameNum}'),
+        SizedBox(height: 20),
+        Text('Auto score: ${scoreState.autoScore}'),
+        SizedBox(height: 20),
+        Text('Teleop score: ${scoreState.teleScore}'),
+        SizedBox(height: 20),
+        Text('Total scored: ${scoreState.totalScore}'),
+      ],
     );
   }
 }

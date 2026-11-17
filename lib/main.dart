@@ -218,25 +218,18 @@ class ScoutingPage extends ConsumerWidget {
       ),
       bottomNavigationBar: Builder(
         builder: (BuildContext context) {
+          //bar at the bottom
           return ConvexAppBar(
             style: TabStyle.fixed,
             backgroundColor: Colors.purple,
             items: const [
               TabItem(
-                icon: Icon(Icons.undo, color: Colors.yellow),
-                title: 'Undo',
-              ),
-              TabItem(
-                icon: Icon(Icons.redo, color: Colors.yellow),
-                title: 'Redo',
+                icon: Icon(Icons.home, color: Colors.yellow),
+                title: 'Home',
               ),
               TabItem(
                 icon: Icon(Icons.upload, color: Colors.yellow),
                 title: 'Submit',
-              ),
-              TabItem(
-                icon: Icon(Icons.home, color: Colors.yellow),
-                title: 'Home',
               ),
               TabItem(
                 icon: Icon(Icons.list_alt, color: Colors.yellow),
@@ -245,35 +238,35 @@ class ScoutingPage extends ConsumerWidget {
             ],
             onTap: (int index) async {
               switch (index) {
-                case 0:
+              //home button
+              case 0:
+                context.go('/');
+              break;
+
+              //submit button
+              case 1:
+              //get the current info
+                final currentScore = ref.read(scoring);
+                final currentTeamNum = ref.read(teamNumberProvider);
+                final currentGameNum = ref.read(gameNumberProvider);
+
+                //team info stuff
+                if (currentTeamNum <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please enter a valid team number.'),
+                    ),
+                  );
                   break;
+                }
 
-                case 1:
-                  break;
+                try {
+                  // get info from tba
+                  final teamData = await fetchTeamInfo(currentTeamNum);
 
-                case 2:
-                  //get the current info
-                  final currentScore = ref.read(scoring);
-                  final currentTeamNum = ref.read(teamNumberProvider);
-                  final currentGameNum = ref.read(gameNumberProvider);
-
-                  //team info stuff
-                  if (currentTeamNum <= 0) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter a valid team number.'),
-                      ),
-                    );
-                    break;
-                  }
-
-                  try {
-                    // get info from tba
-                    final teamData = await fetchTeamInfo(currentTeamNum);
-
-                    //put all info into 1 list
-                    final scoutingEntry =
-                        '''
+                  //put all info into 1 list
+                  final scoutingEntry =
+                  '''
                     Team $currentTeamNum
                     Team Name: ${teamData['nickname'] ?? 'Unknown'}
                     City: ${teamData['city'] ?? 'Unknown'}
@@ -286,41 +279,39 @@ class ScoutingPage extends ConsumerWidget {
                     Total score: ${currentScore.totalScore}
                     ''';
 
-                    // add this shit to the log
-                    scoutingLog.add(scoutingEntry);
+                  // add this stuff to the log
+                  scoutingLog.add(scoutingEntry);
 
-                    // reset everything
-                    _teamNumController.clear();
-                    _gameNumController.clear();
+                  // reset everything
+                  _teamNumController.clear();
+                  _gameNumController.clear();
 
-                    ref.invalidate(teamNumberProvider);
-                    ref.invalidate(gameNumberProvider);
-                    ref.invalidate(scoring);
+                  ref.invalidate(autoTeleProvider);
+                  ref.invalidate(teamNumberProvider);
+                  ref.invalidate(gameNumberProvider);
+                  ref.invalidate(scoring);
 
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Scouting data submitted successfully!'),
-                      ),
-                    );
-                  } catch (error) {
-                    // Tell the user if the API request fails.
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Failed to submit scouting data: $error'),
-                      ),
-                    );
-                  }
-                  break;
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Scouting data submitted successfully!'),
+                    ),
+                  );
+                } catch (error) {
+                  // Tell the user if the API request fails.
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Failed to submit scouting data: $error'),
+                    ),
+                  );
+                }
+              break;
 
-                case 3:
-                  context.go('/');
-                  break;
-
-                case 4:
-                  context.go('/logpage');
-                  break;
+              //log button
+              case 2:
+              context.go('/logpage');
+              break;
               }
             },
           );
@@ -368,6 +359,7 @@ class LogPage extends ConsumerWidget {
                         ],
                       ),
                       SizedBox(height: 30),
+                      //makes each entry in the list a card that is displayed
                       Column(
                         children: scoutingLog.map((entry) {
                           return Card(

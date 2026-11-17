@@ -36,7 +36,9 @@ class OnOffSwitch extends ConsumerWidget {
 class ScoringState {
   final int autoScore;
   final int teleScore;
+
   const ScoringState({required this.autoScore, required this.teleScore});
+
   int get totalScore => autoScore + teleScore;
 }
 
@@ -105,6 +107,7 @@ final autoTeleProvider = NotifierProvider<AutoTeleNotifier, bool>(() {
 
 class ModeButton extends ConsumerWidget {
   const ModeButton({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTele = ref.watch(autoTeleProvider);
@@ -130,7 +133,9 @@ class TeamNumberNotifier extends Notifier<int> {
   void update(int value) => state = value;
 }
 
-final teamNumberProvider = NotifierProvider<TeamNumberNotifier, int>(() => TeamNumberNotifier ());
+final teamNumberProvider = NotifierProvider<TeamNumberNotifier, int>(
+  () => TeamNumberNotifier(),
+);
 
 //game number notifier
 class GameNumberNotifier extends Notifier<int> {
@@ -139,4 +144,7 @@ class GameNumberNotifier extends Notifier<int> {
 
   void update(int value) => state = value;
 }
-final gameNumberProvider = NotifierProvider<GameNumberNotifier, int>(() => GameNumberNotifier ());
+
+final gameNumberProvider = NotifierProvider<GameNumberNotifier, int>(
+  () => GameNumberNotifier(),
+);
